@@ -13,7 +13,8 @@ const Row = styled.div`
 const Title = styled.div`
   font-size: 14px;
   margin-right: 10px;
-  color: #000;
+  color: #243a46;
+  font-weight: bold;
 `
 
 const SignBtn = styled.button`
@@ -25,10 +26,13 @@ const SignBtn = styled.button`
   border: 0px;
   border-radius: 4px;
   cursor: pointer;
+  color: #243a46;
+  font-weight: bold;
+  font-size: 14px;
   background-color: rgba(232, 232, 232, 0.3);
   &:hover {
-    background-color: rgba(140, 140, 140, 0.3);
-    color: #fff;
+    background-color: rgba(36, 58, 70, 0.8);
+    color: rgba(232, 232, 232, 0.8);
   }
 `
 
@@ -43,34 +47,43 @@ const Input = styled.input`
   line-height: 16px;
   font-size: 14px;
   color: #595959;
-  outline-color: #595959;
+  outline: none;
 `
 
-const Sign = () => {
+const Sign = ({setSigned, setName}) => {
   const [isSignIn, setIsSignIn] = useState(true)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSignIn = () => {
+  const handleSignIn = (e) => {
+    e.preventDefault()
     fetch('http://localhost:7000/signIn', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({'username': username, 'password': password})
       }).then(response=>response.json()).then(data=>{
           window.alert(data.message)
+          if (data.status === 200) {
+            setSigned(true)
+            setName(username)
+          }
     })
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = (e) => {
+    e.preventDefault()
     fetch('http://localhost:7000/signUp', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({'username': username, 'password': password})
       }).then(response=>response.json()).then(data=>{
           window.alert(data.message)
+          if (data.status === 200) {
+            setSigned(true)
+            setName(username)
+          }
     })
   }
-
   return (
     <form onSubmit={isSignIn ? handleSignIn : handleSignUp}>
       <Row>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Bar from './components/Bar'
 import Sign from './components/Sign'
@@ -24,13 +24,22 @@ const SignWrapper = styled.div`
 `
 
 
-const App = () =>   (
-  <Wrapper>
-    <Bar />
-    <SignWrapper>
-      <Sign />
-    </SignWrapper>
-  </Wrapper>
-)
+const App = () => {
+  const [signed, setSigned] = useState(false)
+  const [name, setName] = useState("")
+
+  return (
+    <Wrapper>
+      <Bar />
+      <SignWrapper>
+        { signed ? (
+          <p>hi {name}</p>
+        ) :(
+          <Sign setSigned={setSigned} setName={setName}/>
+        )}
+      </SignWrapper>
+    </Wrapper>
+  )
+}
 
 export default App
