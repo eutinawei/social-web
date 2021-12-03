@@ -183,7 +183,6 @@ const Song = ({signed, data, tags, setTags, userInfo, userVote, loveList, setUse
   }
 
   const createTag = (e) => {
-    e.preventDefault()
     fetch('http://localhost:7000/addTag', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },

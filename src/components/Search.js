@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import search from '../asset/search.png'
+import stopWords from '../asset/stopWords.json'
 
 const Wrapper = styled.form`
   display: flex;
@@ -40,10 +41,22 @@ const Search = ({setSongs, userInfo}) => {
 
   const handleSearch = (e) => {
     e.preventDefault()
+    let searchTexts = []
+    let tempLst = searchText.split(" ")
+    for (let i = 0; i < tempLst.length; i++) {
+      if (!stopWords['stop_word'].includes(tempLst[i].toLowerCase())) {
+        searchTexts.push(tempLst[i])
+      }
+    }
+    let postText = ""
+    for (let i = 0; i < searchTexts.length; i++) {
+      if (i === 0) postText += searchTexts[i];
+      else postText += "|" + searchTexts[i];
+    }
     fetch('http://localhost:7000/search', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({'text': `%${searchText}%`, 'username': userInfo.username})
+      body: JSON.stringify({'text': postText, 'username': userInfo.username})
       }).then(response=>response.json()).then(data=>{
           if (data.status === 200) {
             setSongs(data.data)
