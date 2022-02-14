@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 const Btn = styled.button`
   padding: 11px 8px 11px 8px;
-  margin-top: 10px;
+  margin-top: 5px;
   box-sizing: border-box;
-  width: ${props => props.width || '125px'};
+  width: ${props => props.width || '270px'};
   height: 40px;
   border: 0px;
   border-radius: 4px;
